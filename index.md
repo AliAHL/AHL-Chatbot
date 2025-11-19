@@ -20,7 +20,6 @@ title: Chatbot
 </header>
 
 <div class="layout">
-  <!-- INFO / META (desktop aside, mobile slide-over) -->
   <aside class="meta" id="metaPanel" aria-hidden="false">
     <div class="meta-inner">
       <h2>About this bot</h2>
@@ -45,10 +44,9 @@ title: Chatbot
     </div>
   </aside>
 
-  <!-- CHAT AREA -->
   <main class="chat-area" id="chatArea" role="main">
     <div class="chat-shell">
-      <!-- your iframe (keeps microphone permission) -->
+      <!-- your iframe -->
       <iframe id="chatFrame"
               src="https://udify.app/chatbot/sI7tIcJbUKYk9pHy"
               title="Udify Chatbot"
@@ -60,27 +58,31 @@ title: Chatbot
   </main>
 </div>
 
-<!-- FAB for mobile info toggle -->
 <button id="fab" class="fab" aria-label="Open info">❔</button>
 
 <style>
 /* ---------- Variables & reset ---------- */
 :root{
-  --bg-1: #0f172a; --bg-2: #0b1226; --glass: rgba(255,255,255,0.06);
-  --card: rgba(255,255,255,0.06); --muted: #9aa6b2; --accent: #60a5fa;
-  --glass-2: rgba(255,255,255,0.04);
+  --bg-1: #0f172a; --bg-2: #0b1226;
+  --text: #e6eef8;        /* primary readable text on dark */
+  --muted: #9aa6b2;       /* secondary text */
+  --accent: #60a5fa;
+  --glass: rgba(255,255,255,0.06);
   --radius: 14px;
 }
 [data-theme="light"]{
-  --bg-1:#f7f9fc; --bg-2:#eef2fb; --glass: rgba(255,255,255,0.6);
-  --card: rgba(255,255,255,0.7); --muted:#4b5563; --accent:#2563eb; --glass-2: rgba(255,255,255,0.8);
+  --bg-1:#f7f9fc; --bg-2:#eef2fb;
+  --text: #0b1220;        /* primary readable text on light */
+  --muted: #4b5563;
+  --accent: #2563eb;
+  --glass: rgba(255,255,255,0.7);
 }
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
   margin:0;
   font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  color: #e6eef8;
+  color:var(--text);
   background: linear-gradient(160deg,var(--bg-1),var(--bg-2));
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
@@ -88,17 +90,16 @@ body{
   overflow-y:overlay;
 }
 
-/* Animated soft gradient blobs (subtle) */
+/* subtle background blobs */
 body::before{
   content:"";
   position:fixed;
   inset:-10% -20%;
   background:
-    radial-gradient(30vw 30vw at 10% 20%, rgba(96,165,250,0.08), transparent 15%),
-    radial-gradient(25vw 25vw at 90% 80%, rgba(99,102,241,0.06), transparent 12%);
+    radial-gradient(30vw 30vw at 10% 20%, rgba(96,165,250,0.06), transparent 15%),
+    radial-gradient(25vw 25vw at 90% 80%, rgba(99,102,241,0.05), transparent 12%);
   z-index:0;
   pointer-events:none;
-  transform:translateZ(0);
 }
 
 /* ---------- Header ---------- */
@@ -114,8 +115,8 @@ body::before{
 }
 .brand{display:flex; align-items:center; gap:12px}
 .logo{width:56px; height:56px; border-radius:12px; display:grid; place-items:center; font-size:26px; background:linear-gradient(135deg,#1e3a8a,#60a5fa)}
-.brand h1{margin:0;font-size:18px}
-.tag{margin:0;color:var(--muted); font-size:13px}
+.brand h1{margin:0;font-size:18px; color:var(--text)}
+.tag{margin:0; color:var(--muted); font-size:13px}
 .controls{display:flex; gap:8px}
 .icon-btn{background:var(--glass); border:0; padding:8px 10px; border-radius:10px; cursor:pointer; font-size:16px}
 
@@ -125,14 +126,14 @@ body::before{
   background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
   border-radius:var(--radius);
   padding:18px;
-  color:inherit;
+  color:var(--text);
   box-shadow:0 10px 30px rgba(2,6,23,0.6);
   backdrop-filter: blur(8px) saturate(120%);
   border:1px solid rgba(255,255,255,0.03);
 }
 .meta h2{margin-top:0}
+.meta p, .meta ul li, .meta details summary{color:var(--text)}
 .meta ul{padding-left:18px; margin:6px 0 12px}
-.meta details summary{cursor:pointer; color:var(--muted)}
 .meta-footer{margin-top:22px; color:var(--muted); font-size:13px}
 
 /* ---------- Chat card ---------- */
@@ -158,6 +159,7 @@ body::before{
   border-radius:10px;
   background:transparent;
   display:block;
+  max-width:100%;
 }
 
 /* ---------- FAB (mobile) ---------- */
@@ -180,18 +182,39 @@ body::before{
 @media (max-width:900px){
   body{padding:12px}
   .layout{grid-template-columns:1fr; gap:12px; margin-bottom:80px}
-  .meta{position:fixed; right:12px; top:84px; width:82%; max-width:420px; transform:translateX(110%); transition:transform .28s cubic-bezier(.2,.9,.3,1); box-shadow: 0 30px 60px rgba(2,6,23,0.6); display:block}
+  /* meta becomes a slide-over */
+  .meta{
+    position:fixed;
+    right:12px;
+    top:72px;                /* safer top offset so it won't overlap header */
+    width:82%;
+    max-width:420px;
+    transform:translateX(110%);
+    transition:transform .28s cubic-bezier(.2,.9,.3,1);
+    box-shadow: 0 30px 60px rgba(2,6,23,0.6);
+    display:block;
+    height:calc(100vh - 96px);
+    overflow:auto;
+  }
   .meta.open{transform:translateX(0)}
-  .chat-shell{min-height:calc(100vh - 140px); padding:8px}
-  .chat-shell iframe{height:calc(100vh - 160px); border-radius:10px}
+  /* chat-shell uses viewport height minus header & controls; iframe fits 100% of shell */
+  .chat-shell{
+    min-height:unset;
+    height: calc(100vh - 120px); /* most phones: header + small gap ≈ 120px */
+    padding:8px;
+  }
+  .chat-shell iframe{
+    height:100%;
+    max-height: calc(100vh - 120px);
+    border-radius:10px;
+  }
   .controls{gap:6px}
   .fab{display:block}
   .site-header{margin-bottom:8px}
 }
 
-/* ---------- Light-mode text color tweak ---------- */
-[data-theme="light"] .brand h1, [data-theme="light"] .tag{color:#0b1220}
-[data-theme="light"] .meta-footer, [data-theme="light"] .tag{color:var(--muted)}
+/* ---------- Light-mode tweaks ---------- */
+[data-theme="light"] .brand h1, [data-theme="light"] .tag{color:var(--text)}
 </style>
 
 <script>
