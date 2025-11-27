@@ -8,7 +8,7 @@ title: Summarizer Chatbot
     <div class="logo" aria-hidden="true">🤖</div>
     <div>
       <h1>Dify Chatbot</h1>
-      <p class="tag">Summrize Articles — Just Ask!</p>
+      <p class="tag">Summarize Articles — Just Ask!</p>
     </div>
   </div>
 
@@ -264,6 +264,7 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   });
 })();
 </script>
+
 
 
 
