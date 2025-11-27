@@ -1,4 +1,4 @@
-# Summarizer Chatbot
+# Article Summarizer Chatbot
 Hey! Here I've built my first AI chatbot project by generating a chatbot using dify.ai which can take the abstract of an article and return a one-line summary of it.
 
 
