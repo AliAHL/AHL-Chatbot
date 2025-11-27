@@ -24,7 +24,7 @@ title: Chatbot
   <aside class="meta" id="metaPanel" aria-hidden="false">
     <div class="meta-inner">
       <h2>About this bot</h2>
-      <p>Summarizing assistant hosted on Udify. Helpful for knowing what kind of articles you're about to read. You just need to copy and paste the abstract of the article</p>
+      <p>Summarizing assistant hosted on Udify. Helpful for knowing what kind of articles you're about to read. You just need to copy and paste the abstract of the article! </p>
 
       <h3>Quick tips</h3>
       <ul>
@@ -264,6 +264,7 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   });
 })();
 </script>
+
 
 
 
